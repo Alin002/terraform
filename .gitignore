@@ -1,5 +1,5 @@
-/compute/dev.tfvars
-/compute/my_keypair.pem
+*/compute/dev.tfvars
+*/compute/my_keypair.pem
 
 **/.terraform/*
 
