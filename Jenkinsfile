@@ -35,12 +35,11 @@ try {
             secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
         ]]) {
             ansiColor('xterm') {
-            sh 'terraform plan'
-//          sh "${env.TERRAFORM_HOME}/terraform plan -out=tfplan -input=false -var-file='dev.tfvars'"
+            sh 'terraform plan -var-file='dev.tfvars'         
+            }
             }
         }
         }
-    }
 
     if (env.BRANCH_NAME == 'main') {
 
@@ -54,7 +53,7 @@ try {
             secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
             ]]) {
             ansiColor('xterm') {
-                sh 'terraform apply -auto-approve'
+                sh 'terraform apply -var-file='dev.tfvars -auto-approve'
             }
             }
         }
