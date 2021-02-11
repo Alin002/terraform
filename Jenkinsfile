@@ -1,6 +1,19 @@
 // Jenkinsfile
 String credentialsId = 'awsCredentials'
 
+pipeline {
+    agent any
+    stages {
+        stage('clone repo') {
+            steps {
+                git branch: 'main', credentialsId: 'b9502338-df40-4305-b77f-18bdb4d10ea0', url: 'https://github.com/Alin002/terraform.git'
+                echo "pulled the code"
+            }
+            }
+            }
+        }
+
+
 try {
     stage('checkout') {
         node {
