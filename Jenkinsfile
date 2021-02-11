@@ -48,7 +48,7 @@ try {
             secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
         ]]) {
             ansiColor('xterm') {
-            sh 'terraform plan -var-file='dev.tfvars'         
+            sh 'terraform plan -var-file=dev.tfvars'         
             }
             }
         }
@@ -66,7 +66,7 @@ try {
             secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
             ]]) {
             ansiColor('xterm') {
-                sh 'terraform apply -var-file='dev.tfvars -auto-approve'
+                sh 'terraform apply -var-file=dev.tfvars -auto-approve'
             }
             }
         }
