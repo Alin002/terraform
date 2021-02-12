@@ -1,6 +1,6 @@
 // Jenkinsfile
 String credentialsId = 'awsCredentials'
-env.jenkins_node_custom_workspace_path = "/opt/bitnami/apps/jenkins/jenkins_home/${JOB_NAME}/workspace/terraform-dev-waf/compute"
+env.jenkins_node_custom_workspace_path = '/var/jenkins_home/${JOB_NAME}/workspace/terraform-dev-waf/compute'
 pipeline {
     agent any
     stages {
@@ -10,8 +10,8 @@ pipeline {
                 echo "pulled the code"
             }
             }
-            }
-        }
+        //    }
+        //}
 
 try {
     stage('checkout') {
@@ -25,10 +25,10 @@ try {
 
     // Run terraform init
     stage('init') {
-
+    steps {
         dir ("/var/jenkins_home/workspace/Terraform_main/terraform-dev-waf/compute") {
             sh "pwd"
-        }
+        
 
         node {
         withCredentials([[
@@ -38,27 +38,30 @@ try {
             secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
         ]]) {
             ansiColor('xterm') {
-            sh 'terraform init '
+            sh 'sudo terraform init $jenkins_node_custom_workspace_path/terraform-dev-waf/compute'
+            sh 'sudo terraform plan $jenkins_node_custom_workspace_path/terraform-dev-waf/compute -var-file=dev.tfvars' 
             }
+        }
         }
         }
     }
+    }
 
     // Run terraform plan
-    stage('plan') {
-        node {
-        withCredentials([[
-            $class: 'AmazonWebServicesCredentialsBinding',
-            credentialsId: credentialsId,
-            accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-            secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
-        ]]) {
-            ansiColor('xterm') {
-            sh 'terraform plan -var-file=dev.tfvars'         
-            }
-            }
-        }
-        }
+    // stage('plan') {
+    //     node {
+    //     withCredentials([[
+    //         $class: 'AmazonWebServicesCredentialsBinding',
+    //         credentialsId: credentialsId,
+    //         accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+    //         secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+    //     ]]) {
+    //         ansiColor('xterm') {
+    //         sh 'terraform plan -var-file=dev.tfvars'         
+    //         }
+    //         }
+    //     }
+    //     }
 
     if (env.BRANCH_NAME == 'main') {
 
@@ -96,6 +99,8 @@ try {
     }
     currentBuild.result = 'SUCCESS'
     }
+}   
+} 
     catch (org.jenkinsci.plugins.workflow.steps.FlowInterruptedException flowError) {
     currentBuild.result = 'ABORTED'
     }
