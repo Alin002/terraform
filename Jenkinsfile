@@ -13,7 +13,6 @@ pipeline {
             }
         }
 
-
 try {
     stage('checkout') {
         node {
@@ -22,8 +21,15 @@ try {
         }
     }
 
+
+
     // Run terraform init
     stage('init') {
+
+        dir ("/var/jenkins_home/workspace/Terraform_main/terraform-dev-waf/compute") {
+            sh "pwd"
+        }
+
         node {
         withCredentials([[
             $class: 'AmazonWebServicesCredentialsBinding',
@@ -32,7 +38,7 @@ try {
             secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
         ]]) {
             ansiColor('xterm') {
-            sh 'terraform init'
+            sh 'terraform init '
             }
         }
         }
