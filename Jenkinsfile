@@ -1,17 +1,6 @@
 // Jenkinsfile
 String credentialsId = 'awsCredentials'
 env.jenkins_node_custom_workspace_path = '/var/jenkins_home/${JOB_NAME}/workspace/terraform-dev-waf/compute'
-pipeline {
-    agent any
-    stages {
-        stage('clone repo') {
-            steps {
-                git branch: 'main', credentialsId: 'b9502338-df40-4305-b77f-18bdb4d10ea0', url: 'https://github.com/Alin002/terraform.git'
-                echo "pulled the code"
-            }
-            }
-        //    }
-        //}
 
 try {
     stage('checkout') {
@@ -21,14 +10,19 @@ try {
         }
     }
 
-
+    stage('clone repo') {
+            node {
+                git branch: 'main', credentialsId: 'b9502338-df40-4305-b77f-18bdb4d10ea0', url: 'https://github.com/Alin002/terraform.git'
+                echo "pulled the code"
+            }
+            }
 
     // Run terraform init
     stage('init') {
-    steps {
+
         dir ("/var/jenkins_home/workspace/Terraform_main/terraform-dev-waf/compute") {
             sh "pwd"
-        
+        }
 
         node {
         withCredentials([[
@@ -43,8 +37,6 @@ try {
             }
         }
         }
-        }
-    }
     }
 
     // Run terraform plan
@@ -99,8 +91,6 @@ try {
     }
     currentBuild.result = 'SUCCESS'
     }
-}   
-} 
     catch (org.jenkinsci.plugins.workflow.steps.FlowInterruptedException flowError) {
     currentBuild.result = 'ABORTED'
     }
