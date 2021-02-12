@@ -1,6 +1,6 @@
 // Jenkinsfile
 String credentialsId = 'awsCredentials'
-
+env.jenkins_node_custom_workspace_path = "/opt/bitnami/apps/jenkins/jenkins_home/${JOB_NAME}/workspace/terraform-dev-waf/compute"
 pipeline {
     agent any
     stages {
