@@ -1,0 +1,9 @@
+vpc_cidr = "10.0.0.0/16"
+public_subnets_cidr = ["10.0.1.0/24", "10.0.2.0/24"]
+# private_subnets_cidr = "192.168.0.32/28"
+tenancy_dev = "default"
+instance_ami = "ami-0075ec2db1e9db52b"
+instance_type = "t2.micro"
+key_name = "my_keypair"
+lb_name = "website-terraform-alb2"
+tg_name = "terraform-alb-target2"
