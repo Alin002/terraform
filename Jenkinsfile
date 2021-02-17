@@ -33,7 +33,7 @@ pipeline {
             when { anyOf
                             {
                                 environment name: 'ACTION', value: 'plan';
-            //						environment name: 'ACTION', value: 'apply'
+            //					environment name: 'ACTION', value: 'apply'
                             }
             }
             steps {
@@ -46,32 +46,32 @@ pipeline {
                         secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
                     ]]) {
                         sh 'terraform init'
-                        sh 'terraform  plan -var-file=dev.tfvars' 
+                        sh 'terraform  plan -var-file=dev.tfvars ' 
                         }
                     }
             }
             }
         
-    // stage(apply){
-    //         when { anyOf
-	// 				{
-	// 					environment name: 'ACTION', value: 'apply'
-	// 				}
-	// 			}
-    //     steps {
-    //             dir('/var/jenkins_home/workspace/Terraform_main/terraform-dev-waf/compute') {
-    //                 sh'ls -la'
-    //                 withCredentials([[
-    //                 $class: 'AmazonWebServicesCredentialsBinding',
-    //                 credentialsId: credentialsId,
-    //                 accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-    //                 secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
-    //             ]]) {
-    //                 sh 'terraform apply -var-file=dev.tfvars -auto-approve'
-    //                 }
-    //             }
-    //             }
-    //     }
+    stage(apply){
+            when { anyOf
+					{
+						environment name: 'ACTION', value: 'apply'
+					}
+				}
+        steps {
+                dir('/var/jenkins_home/workspace/Terraform_main/terraform-dev-waf/compute') {
+                    sh'ls -la'
+                    withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: credentialsId,
+                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+                ]]) {
+                    sh 'terraform apply -var-file=dev.tfvars -auto-approve'
+                    }
+                }
+                }
+        }
 
         stage(show){
             steps{
