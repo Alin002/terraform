@@ -2,9 +2,9 @@ terraform {
     required_version = ">= 0.14"
 
     backend "s3" {
-    # Replace this with your bucket name!
+    
     bucket         = "trf-running-state"
-    key            = "global/s3/terraform.tfstate"
+    key            = "trf-running-state/terraform.tfstate"
     region         = "eu-west-1"
 
     # Replace this with your DynamoDB table name!
