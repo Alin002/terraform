@@ -4,7 +4,7 @@ terraform {
     backend "s3" {
     
     bucket         = "trf-running-state"
-    key            = "trf-running-state/terraform.tfstate"
+    key            = "terraform.tfstate"
     region         = "eu-west-1"
 
     # Replace this with your DynamoDB table name!
