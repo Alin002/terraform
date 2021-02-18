@@ -7,7 +7,3 @@
 # #variable "aws_db_subnet_group"{}
 # #variable "rds_private_subnet"{}
 # variable "rds_sg"{}
-
-
-
-

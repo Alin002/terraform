@@ -11,15 +11,15 @@ String credentialsId = 'awsCredentials'
 pipeline {
     agent any
 
-    parameters {
+    // parameters {
 
-		// string (name: 'ENV_NAME',
-        //         defaultValue: 'DEV',
-        //         description: 'Env name')
-		choice (name: 'ACTION',
-				choices: [ 'plan', 'apply', 'destroy'],
-				description: 'Run terraform plan / apply / destroy')
-    }
+	// 	string (name: 'ENV_NAME',
+    //             defaultValue: 'DEV',
+    //             description: 'Env name')
+	// 	choice (name: 'ACTION',
+	// 			choices: [ 'plan', 'apply', 'destroy'],
+	// 			description: 'Run terraform plan / apply / destroy')
+    // }
 
     stages {
         stage('checkout') {
@@ -33,7 +33,7 @@ pipeline {
             when { anyOf
                             {
                                 environment name: 'ACTION', value: 'plan';
-            //					environment name: 'ACTION', value: 'apply'
+                                environment name: 'ENV_NAME', value: 'DEV'
                             }
             }
             steps {
