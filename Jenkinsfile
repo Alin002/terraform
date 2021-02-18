@@ -116,7 +116,7 @@ pipeline {
         }
     }
 
-    stage(clean ws) {
+    stage('clean ws') {
         steps {
             cleanWs()
             }
