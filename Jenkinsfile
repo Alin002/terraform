@@ -50,7 +50,7 @@ pipeline {
                         accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                         secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
                     ]]) {
-                        sh 'terraform init'
+                        sh 'terraform init -no-color'
                         sh "terraform  plan -var-file=${params.ENVIRONMENT}.tfvars -no-color"
                         }
                     }
