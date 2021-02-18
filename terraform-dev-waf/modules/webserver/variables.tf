@@ -41,7 +41,7 @@ variable "allow_ssh" { }
 
 variable "main_vpc" { }
 
-variable "rds_sg" {}
+#variable "rds_sg" {}
 
 #variable "key_name" {}
 #variable "public_key" {}

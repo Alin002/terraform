@@ -24,9 +24,9 @@ module "networking" {
 
     vpc_cidr              = var.vpc_cidr
     public_subnets_cidr   = var.public_subnets_cidr
-    private_subnets_cidr  = var.private_subnets_cidr
+#    private_subnets_cidr  = var.private_subnets_cidr
     website_lb_arn        = module.elb.website_lb_arn
-    private_subnet        = module.networking.private_subnet_main
+#    private_subnet        = module.networking.private_subnet_main
 }
 
 module "webserver" {
@@ -37,7 +37,7 @@ module "webserver" {
 
 #     # private_subnet       = module.networking.private_subnet_main
     allow_ssh              = module.webserver.sg_allow_ssh
-    rds_sg                 = module.webserver.rdsdb_sg
+#    rds_sg                 = module.webserver.rdsdb_sg
 #     #secretsmanager_key_name = var.secretsmanager_key_name    
 #     key_name       = var.key_name
 #     public_key     = var.public_key
@@ -60,12 +60,12 @@ module "elb" {
 #   availability_zones     = ["eu-west-1a", "eu-west-1b"]
 }
 
-module "rds" {
-    source = "../modules/rds"
+# module "rds" {
+#     source = "../modules/rds"
 
-#    rds_private_subnet    = module.networking.rds_subnet_group
-    rds_sg                 = module.webserver.rdsdb_sg
-}
+# #    rds_private_subnet    = module.networking.rds_subnet_group
+#     rds_sg                 = module.webserver.rdsdb_sg
+# }
 
 module "lambda" {
         source = "../modules/lambda"

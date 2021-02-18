@@ -26,23 +26,23 @@ resource "aws_subnet" "compute_public_subnet" {
     }
 }
 
-/* Private subnet */
-resource "aws_subnet" "private_subnet" {
-    count     = length(var.private_subnets_cidr)
-    vpc_id                  = aws_vpc.main_vpc.id
-    cidr_block              = element(var.private_subnets_cidr,count.index)
-    map_public_ip_on_launch = "false"
-    availability_zone       = element(var.azs,count.index)
+# /* Private subnet */
+# resource "aws_subnet" "private_subnet" {
+#     count     = length(var.private_subnets_cidr)
+#     vpc_id                  = aws_vpc.main_vpc.id
+#     cidr_block              = element(var.private_subnets_cidr,count.index)
+#     map_public_ip_on_launch = "false"
+#     availability_zone       = element(var.azs,count.index)
 
-    tags = {
-    Name        = "private-subnet-bytrf-${count.index+1}"
-    }
-}
+#     tags = {
+#     Name        = "private-subnet-bytrf-${count.index+1}"
+#     }
+# }
 
-resource "aws_db_subnet_group" "rds_private_subnet" {
-    name = "rds-private-subnet-group"
-    subnet_ids = var.private_subnet[*]
-}
+# resource "aws_db_subnet_group" "rds_private_subnet" {
+#     name = "rds-private-subnet-group"
+#     subnet_ids = var.private_subnet[*]
+# }
 
 
 resource "aws_internet_gateway" "internet_gw" {

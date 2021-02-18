@@ -3,10 +3,10 @@ output "sg_allow_ssh" {
     value = aws_security_group.allow_ssh.id
 }
 
-output "rdsdb_sg" {
-    description = "SG used for rds connection"
-    value = aws_security_group.rds_sg.id
-}
+# output "rdsdb_sg" {
+#     description = "SG used for rds connection"
+#     value = aws_security_group.rds_sg.id
+# }
 
 # output "webserver_instances" {
 #     description = "Instances id created in module webserver"
