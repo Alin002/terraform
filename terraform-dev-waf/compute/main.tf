@@ -3,7 +3,7 @@ terraform {
 
     backend "s3" {
     
-    bucket         = "trf-running-state"
+    bucket         = "trf-running-state-new"
     key            = "terraform.tfstate"
     region         = "eu-west-1"
 
