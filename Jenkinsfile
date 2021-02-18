@@ -11,15 +11,20 @@ String credentialsId = 'awsCredentials'
 pipeline {
     agent any
 
-    // parameters {
+    environment {
+		PROFILE = "${params.ENVIRONMENT}"
+		ACTION = "${params.ACTION}"
+    } 
 
-	// 	string (name: 'ENV_NAME',
-    //             defaultValue: 'DEV',
-    //             description: 'Env name')
-	// 	choice (name: 'ACTION',
-	// 			choices: [ 'plan', 'apply', 'destroy'],
-	// 			description: 'Run terraform plan / apply / destroy')
-    // }
+    parameters {
+
+		choice (name: 'ENVIRONMENT',
+                choices: [ 'dev', 'qt'],
+                description: 'Env name')
+		choice (name: 'ACTION',
+				choices: [ 'plan', 'apply', 'destroy'],
+				description: 'Run terraform plan / apply / destroy')
+    }
 
     stages {
         stage('checkout') {
@@ -33,7 +38,7 @@ pipeline {
             when { anyOf
                             {
                                 environment name: 'ACTION', value: 'plan';
-                                environment name: 'ENV_NAME', value: 'DEV'
+                                environment name: 'ENV_NAME', value: 'dev'
                             }
             }
             steps {
@@ -46,7 +51,7 @@ pipeline {
                         secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
                     ]]) {
                         sh 'terraform init'
-                        sh 'terraform  plan -var-file=dev.tfvars ' 
+                        sh "terraform  plan -var-file=${params.ENVIRONMENT}.tfvars -no-color"
                         }
                     }
             }
@@ -67,25 +72,25 @@ pipeline {
                     accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                     secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
                 ]]) {
-                    sh 'terraform apply -var-file=dev.tfvars -auto-approve'
+                    sh "terraform apply -var-file=${params.ENVIRONMENT}.tfvars -auto-approve -no-color"
                     }
                 }
                 }
         }
 
-        stage(show){
-            steps{
-            withCredentials([[
-            $class: 'AmazonWebServicesCredentialsBinding',
-            credentialsId: credentialsId,
-            accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-            secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
-            ]]) {
-            //ansiColor('xterm') {
-                sh 'terraform show'
-            }
-        }
-        }
+        // stage(show){
+        //     steps{
+        //     withCredentials([[
+        //     $class: 'AmazonWebServicesCredentialsBinding',
+        //     credentialsId: credentialsId,
+        //     accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+        //     secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+        //     ]]) {
+        //     //ansiColor('xterm') {
+        //         sh 'terraform show'
+        //     }
+        // }
+        // }
         
         
 
@@ -105,7 +110,7 @@ pipeline {
                     accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                     secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
                 ]]) {
-                    sh 'terraform destroy -var-file=dev.tfvars -auto-approve'
+                    sh "terraform destroy -var-file=${params.ENVIRONMENT}.tfvars -auto-approve -no-color"
                     }
                 }
                 }
