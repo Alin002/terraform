@@ -41,7 +41,7 @@ pipeline {
                             }
             }
             steps {
-                    dir('/var/jenkins_home/workspace/Terraform_main/terraform-dev-waf/compute') {
+                    dir('/var/jenkins_home/workspace/Terraform_parameterized/terraform-dev-waf/compute') {
                         sh'ls -la'
                         withCredentials([[
                         $class: 'AmazonWebServicesCredentialsBinding',
@@ -63,7 +63,7 @@ pipeline {
 					}
 				}
         steps {
-                dir('/var/jenkins_home/workspace/Terraform_main/terraform-dev-waf/compute') {
+                dir('/var/jenkins_home/workspace/Terraform_parameterized/terraform-dev-waf/compute') {
                     sh'ls -la'
                     withCredentials([[
                     $class: 'AmazonWebServicesCredentialsBinding',
@@ -101,7 +101,7 @@ pipeline {
 					}
             }
         steps {
-                dir('/var/jenkins_home/workspace/Terraform_main/terraform-dev-waf/compute') {
+                dir('/var/jenkins_home/workspace/Terraform_parameterized/terraform-dev-waf/compute') {
                     sh'ls -la'
                     withCredentials([[
                     $class: 'AmazonWebServicesCredentialsBinding',
